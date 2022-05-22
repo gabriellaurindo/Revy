@@ -1,4 +1,4 @@
-import Command, { OptionType } from "../interfaces/Command";
+import Command from "../interfaces/Command";
 
 export const gostei: Command = {
   name: "gostei",
