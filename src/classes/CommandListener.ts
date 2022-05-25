@@ -6,7 +6,7 @@ class CommandListener {
     if (!Bot.client) return;
     Bot.client.on("interactionCreate", async (interaction) => {
       if (!interaction.isCommand()) return;
-
+      //TODO: Usar um filter para não percorrer todos os comandos da aplicação
       this.commands.forEach((command) => {
         if (interaction.commandName === command.name) command.run(interaction);
       });

@@ -1,6 +1,6 @@
 import { Client, Intents } from "discord.js";
 
-const intents = [Intents.FLAGS.GUILDS];
+const intents = [Intents.FLAGS.GUILD_MESSAGES];
 
 class Bot {
   public static client: Client;
