@@ -1,6 +1,6 @@
-import { ping } from "./ping";
-import { gostei } from "./gostei";
+import { ping } from "./slash/ping";
+import { embed } from "./slash/embeds/embed";
 
 export default [
-    ping, gostei
+    ping, embed
 ];

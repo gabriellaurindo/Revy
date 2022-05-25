@@ -2,7 +2,7 @@ import { SlashCommandBuilder } from "@discordjs/builders";
 import { REST } from "@discordjs/rest";
 import { Routes } from "discord-api-types/v9";
 import Command from "../interfaces/Command";
-
+import CommandsOptions from "./CommandsOptions";
 class Rest {
   private rest: REST;
   private commands: Command[] = [];
@@ -16,11 +16,14 @@ class Rest {
     (async () => {
       try {
         console.log("Recarregando os comandos de barra da aplicação...");
+        const options = new CommandsOptions();
         await this.rest.put(Routes.applicationCommands(this.clientId), {
           body: this.commands.map((command) => {
             const data = new SlashCommandBuilder()
               .setName(command.name.toLowerCase())
-              .setDescription(command.description);
+              .setDescription(command.description)
+              const dataWithOptions = options.addFields(data, command.options);
+              return dataWithOptions.toJSON();
             return data.toJSON();
           }),
         });
@@ -31,7 +34,7 @@ class Rest {
         console.error(error);
       }
     })();
-  }
+  };
 }
 
 export default Rest;
