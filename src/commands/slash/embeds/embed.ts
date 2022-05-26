@@ -3,7 +3,7 @@ import { MessageEmbed }  from 'discord.js';
 import { OptionType } from "../../../interfaces/Option";
 
 
-
+export type HexColorString = `#${string}`;
 
 export const embed: Command = {
   name: "embed",
@@ -15,26 +15,58 @@ export const embed: Command = {
       required: true,
       type: OptionType.String
     },
+	{
+		name: "descricao",
+		description: "Descrição do embed",
+		required: true,
+		type: OptionType.String
+	  },
+	  {
+		name: "color",
+		description: "Cor em hexadecimal sem a #",
+		required: false,
+		type: OptionType.String
+	  },  
   ],
   run: async (interaction) => {
-    const exampleEmbed = new MessageEmbed()
-	.setColor('#0099ff')
-	.setTitle(interaction.options.data[0].value.toString())
-	.setURL('https://discord.js.org/')
-	.setAuthor({ name: 'Some name', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
-	.setDescription('Some description here')
-	.setThumbnail('https://i.imgur.com/AfFp7pu.png')
-	.addFields(
-		{ name: 'Regular field title', value: 'Some value here' },
-		{ name: '\u200B', value: '\u200B' },
-		{ name: 'Inline field title', value: 'Some value here', inline: true },
-		{ name: 'Inline field title', value: 'Some value here', inline: true },
-	)
-	.addField('Inline field title', 'Some value here', true)
-	.setImage('https://i.imgur.com/AfFp7pu.png')
+	const options = interaction.options.data
+    let descricao: string;
+    let titulo: string;
+	let color: HexColorString;
+    if(!options || options.length > 0 ){
+      options.forEach((option)=>{
+        switch (option.name){
+          case "descricao":
+			descricao = option.value.toString()
+            break;
+          case "titulo":
+              titulo = option.value.toString()
+            break;
+		  case "color":
+			  color = `#${option.value.toString()}`
+			  break;
+          default:
+            break;  
+        } 
+      })
+    }
+	const exampleEmbed = new MessageEmbed()
+	.setColor(color? color: '#0099ff')
+	.setTitle(titulo? titulo: "Default text")
+	//.setURL('https://discord.js.org/')
+	//.setAuthor({ name: 'Some name', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
+	.setDescription(descricao? descricao: "Default description")
+	//.setThumbnail('https://i.imgur.com/AfFp7pu.png')
+	//.addFields(
+	//	{ name: 'Regular field title', value: 'Some value here' },
+	//	{ name: '\u200B', value: '\u200B' },
+	//	{ name: 'Inline field title', value: 'Some value here', inline: true },
+	//	{ name: 'Inline field title', value: 'Some value here', inline: true },
+	//)
+	//.addField('Inline field title', 'Some value here', true)
+	.setImage('https://uploaddeimagens.com.br/images/003/868/265/full/logo2.png?1652579899')
 	.setTimestamp()
-	.setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
-    console.log(interaction.channel)
+	.setFooter({ text: '<𝓓𝓮𝓿 𝓡𝓸𝓸𝓶/>', iconURL: 'https://uploaddeimagens.com.br/images/003/868/265/full/logo2.png?1652579899' });
     await interaction.reply({embeds:[exampleEmbed]});
   },
 };
