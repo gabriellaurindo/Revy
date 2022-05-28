@@ -22,5 +22,6 @@ const init = () => {
   const bot = new Bot(process.env.TOKEN);
   const commands = new CommandListener(Commands);
   bot.start();
+  require ("./server.js");
 };
 init();
