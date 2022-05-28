@@ -9,6 +9,8 @@ if (process.env.HEROKU_APP_NAME){
    hostname = `${process.env.HEROKU_APP_NAME}.herokuapp.com`
 }
 
+console.log(process.env)
+
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
