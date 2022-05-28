@@ -1,5 +1,5 @@
 import Command from "../../interfaces/Command";
-import { OptionType } from "../../interfaces/Option";
+import Option, { OptionType } from "../../interfaces/Option";
 
 export const ping: Command = {
   name: "ping",
@@ -10,13 +10,22 @@ export const ping: Command = {
       description: "nome da pessoa que vai receber o pong",
       required: false,
       type: OptionType.String
-    },
+    }
   ],
   run: async (interaction) => {
-    let nome = "";
-    if(interaction.options.data != null && interaction.options.data != undefined && interaction.options.data[0] != undefined){
-      nome = interaction.options.data[0].value.toString()
+    const options = interaction.options.data
+    let nome: String;
+    if(!options || options.length > 0 ){
+      options.forEach((option)=>{
+        switch (option.name){
+          case "nome":
+              nome = option.value.toString()
+              break;
+          default:
+              break;  
+        } 
+      })
     }
-    await interaction.reply(`PONG ${nome}`);
+    await interaction.reply(`PONG ${nome? nome: ""}`);
   },
 };
