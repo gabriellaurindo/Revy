@@ -30,20 +30,20 @@ export const embed: Command = {
   ],
   run: async (interaction) => {
 	const options = interaction.options.data
-    let descricao: string;
-    let titulo: string;
-	let color: HexColorString;
+    let descricao: string = "";
+    let titulo: string = "";
+	let color: HexColorString = `#FFF`;
     if(!options || options.length > 0 ){
       options.forEach((option)=>{
         switch (option.name){
           case "descricao":
-			descricao = option.value.toString()
+			descricao = option.value ? option.value.toString() : ""
             break;
           case "titulo":
-              titulo = option.value.toString()
+              titulo = option.value ? option.value.toString() : ""
             break;
 		  case "color":
-			  color = `#${option.value.toString()}`
+			  color = option.value ? `#${option.value.toString()}` : `#FFF` 
 			  break;
           default:
             break;  
@@ -51,11 +51,11 @@ export const embed: Command = {
       })
     }
 	const exampleEmbed = new MessageEmbed()
-	.setColor(color? color: '#0099ff')
-	.setTitle(titulo? titulo: "Default text")
+	.setColor(color)
+	.setTitle(titulo)
 	//.setURL('https://discord.js.org/')
 	//.setAuthor({ name: 'Some name', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
-	.setDescription(descricao? descricao: "Default description")
+	.setDescription(descricao)
 	//.setThumbnail('https://i.imgur.com/AfFp7pu.png')
 	//.addFields(
 	//	{ name: 'Regular field title', value: 'Some value here' },
