@@ -14,18 +14,18 @@ export const ping: Command = {
   ],
   run: async (interaction) => {
     const options = interaction.options.data
-    let nome: String;
+    let nome: String = "";
     if(!options || options.length > 0 ){
       options.forEach((option)=>{
         switch (option.name){
           case "nome":
-              nome = option.value.toString()
+              nome = option.value ? option.value.toString() : ""
               break;
           default:
               break;  
         } 
       })
     }
-    await interaction.reply(`PONG ${nome? nome: ""}`);
+    await interaction.reply(`PONG ${nome}`);
   },
 };
